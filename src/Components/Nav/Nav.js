@@ -4,7 +4,9 @@ export default class Nav extends Component {
     render() {
         return (
             <div>
-                <p>Nav</p>
+                <button>Home</button>
+                <button>New Post</button>
+                <button>Logout</button>
             </div>
         )
     }
