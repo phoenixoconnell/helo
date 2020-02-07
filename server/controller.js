@@ -20,6 +20,30 @@ const register = async (req, res) => {
     }
 }
 
+const login = async (req, res) => {
+    const db = req.app.get('db');
+    const { username, password } = req.body;
+
+    const existingUser = await db.checkForUser(username);
+
+    if(!existingUser[0]){
+        res.status(403).json('Please create an account')
+    } else {
+        const authUser = bcrypt.compareSync(password, existingUser[0].hash);
+
+        if(!authUser){
+            res.status(403).json('Username or password incorrect, please try again')
+        } else {
+            req.session.user = {
+                user_id: existingUser[0].user_id,
+                username: existingUser[0].username,
+            }
+            res.status(200).json(req.session.user)
+        }
+    }
+}
+
 module.exports = {
-    register
+    register,
+    login
 }

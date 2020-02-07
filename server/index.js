@@ -22,6 +22,7 @@ massive(DB_STRING).then(db => {
 
 //endpoints
 app.post('/auth/register', controller.register);
+app.post('/auth/login', controller.login);
 
 
 //listen
