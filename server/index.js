@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const controller = require('./controller');
 const massive = require('massive');
+const session = require('express-session')
 
 // //controllers
 // const { register } = require('./controller')
@@ -13,6 +14,11 @@ const { SERVER_PORT, DB_STRING, SESSION_SECRET } = process.env;
 
 //middleware
 app.use(express.json());
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
 
 //massive
 massive(DB_STRING).then(db => {
